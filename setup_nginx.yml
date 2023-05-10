@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install nginix via yum
+      ansible.builtin.yum:
+        name: nano
+        state: present

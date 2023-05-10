@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: true
+  vars:
+    username: user2
+  tasks:
+    - name: Userdel
+      user:
+        name: "{{username}}"
+        state: absent
+    - name: Del homedir
+      file:
+        path: "/home/{{username}}"
+        state: absent

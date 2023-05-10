@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+
+
+  tasks:
+  - name: key
+    shell: ps -aux | grep sisadmin
+    register:
+     neststat_result
+     #changet_when: false
+
+  - name: copy
+    copy: null
+     src: /home/user2/key.txt
+     dest: /home/sisadmin/ansible/
+     remote_src: yes

@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  vars:
+    username: user1
+  vars_files:
+    - password.yml
+  tasks:
+    - name: create user
+      user:
+        name: "{{username}}"
+        createhome: yes
+        shell: /bin/bash
+    - name: add user to wheel group
+      user:
+        name: "{{username}}"
+        groups: wheel
+        append: yes
+    - name: set user password from file
+      user:
+        name: "{{username}}"
+        password:"{{password}}"
+    - name: deploy SSH key
+      authorized_key:
+        user: "{{username}}"
+        key: "{{lookup('file', '/home/sisadmin/.ssh/id_rsa.pub')}}"
+        state: present

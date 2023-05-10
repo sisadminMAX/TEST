@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  vars:
+   username: testuser
+   password: "{{ lookup('file', '/home/sisadmin/ansible/playbook/passwd.yml') }}"
+  tasks:
+    - name: Create user
+      user:
+        name: user2
+        password: "{{ lookup('file', '/home/sisadmin/ansible/playbook/passwd.yml') }}"
+        shell: /bin/bash
+        group: wheel
+        append: yes
+    - name: deploy SSH key
+      authorized_key:
+        user: user2
+        key: "{{lookup('file', '/home/sisadmin/.ssh/id_rsa.pub')}}"
+        state: present
+

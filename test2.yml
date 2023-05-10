@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: nano removed
+      ansible.builtin.yum:
+        name: nano
+        state: removed
+
